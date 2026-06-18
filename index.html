@@ -4,642 +4,423 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FC26 Career Mode — Sporting Director's Dossier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Bebas+Neue&display=swap');
+  :root{
+    --bg:#0b130f;
+    --bg-soft:#0e1813;
+    --card:#121d17;
+    --card-hover:#15231b;
+    --line:rgba(232,228,219,0.09);
+    --line-strong:rgba(232,228,219,0.16);
+    --text:#ece8df;
+    --text-muted:#8ea394;
+    --text-dim:#5e6f64;
+    --accent:#e8b54a;
+    --accent-dim:rgba(232,181,74,0.14);
+    --accent-line:rgba(232,181,74,0.35);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse 900px 500px at 50% -10%, rgba(232,181,74,0.08), transparent),
+      var(--bg);
+    color:var(--text);
+    font-family:'Inter',system-ui,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  /* ---------- header ---------- */
+  header{padding:72px 0 40px;border-bottom:1px solid var(--line);}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--accent);margin:0 0 18px;
+  }
+  h1{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:clamp(34px,5vw,56px);
+    line-height:1.05;
+    margin:0 0 18px;
+    letter-spacing:-0.01em;
+  }
+  header p.lede{
+    max-width:640px;color:var(--text-muted);font-size:16.5px;margin:0 0 30px;
+  }
+  .audit{
+    display:flex;flex-wrap:wrap;gap:10px;
+  }
+  .audit span{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    color:var(--text-dim);
+    border:1px solid var(--line);
+    border-radius:100px;
+    padding:7px 14px;
+  }
+  .audit span b{color:var(--accent);font-weight:500;}
 
-  :root {
-    --bg: #0e0e10;
-    --surface: #17171a;
-    --surface2: #1f1f24;
-    --border: rgba(255,255,255,0.08);
-    --border2: rgba(255,255,255,0.14);
-    --text: #f0f0f0;
-    --muted: #888;
-    --faint: #555;
-    --accent: #e8c84a;
-    --accent2: #c9a820;
-    --lpl: #7c5cfc;
-    --lch: #e8a020;
-    --ll1: #3a8fe8;
-    --lbl: #e84040;
-    --lla: #34b26e;
-    --lsa: #20bfb0;
+  /* ---------- stat strip ---------- */
+  .stats{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    border-bottom:1px solid var(--line);
   }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Inter', system-ui, sans-serif;
-    font-size: 14px;
-    line-height: 1.6;
-    min-height: 100vh;
+  .stat{padding:22px 0;text-align:center;border-right:1px solid var(--line);}
+  .stat:last-child{border-right:none;}
+  .stat .num{
+    font-family:'Fraunces',serif;font-size:30px;color:var(--accent);font-weight:600;
   }
-
-  /* HEADER */
-  .header {
-    padding: 48px 40px 36px;
-    border-bottom: 0.5px solid var(--border);
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-  .header-left {}
-  .eyebrow {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: .2em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 8px;
-  }
-  .title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 52px;
-    line-height: 1;
-    letter-spacing: .02em;
-    color: var(--text);
-  }
-  .subtitle {
-    margin-top: 8px;
-    font-size: 13px;
-    color: var(--muted);
-    max-width: 500px;
-  }
-  .header-stat {
-    text-align: right;
-  }
-  .header-stat .big {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 64px;
-    line-height: 1;
-    color: var(--accent);
-  }
-  .header-stat .small {
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: .05em;
+  .stat .label{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.08em;
+    text-transform:uppercase;color:var(--text-dim);margin-top:4px;
   }
 
-  /* FILTERS */
-  .filter-bar {
-    padding: 20px 40px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-    border-bottom: 0.5px solid var(--border);
-    position: sticky;
-    top: 0;
-    background: rgba(14,14,16,0.95);
-    backdrop-filter: blur(8px);
-    z-index: 10;
+  /* ---------- filters ---------- */
+  .filters{
+    display:flex;gap:8px;flex-wrap:wrap;
+    padding:28px 0;border-bottom:1px solid var(--line);
   }
-  .filter-label {
-    font-size: 10px;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--faint);
-    margin-right: 4px;
+  .pill{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;color:var(--text-muted);
+    background:transparent;border:1px solid var(--line);
+    border-radius:100px;padding:8px 16px;cursor:pointer;
+    transition:all .15s ease;
   }
-  .fb {
-    font-size: 11px;
-    font-weight: 500;
-    padding: 5px 12px;
-    border-radius: 20px;
-    border: 0.5px solid var(--border2);
-    background: transparent;
-    color: var(--muted);
-    cursor: pointer;
-    transition: all .15s;
-  }
-  .fb:hover { color: var(--text); border-color: rgba(255,255,255,0.3); }
-  .fb.on { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 600; }
-  .count { margin-left: auto; font-size: 11px; color: var(--faint); }
+  .pill:hover{border-color:var(--line-strong);color:var(--text);}
+  .pill.active{background:var(--accent);color:#16110a;border-color:var(--accent);font-weight:500;}
 
-  /* GRID */
-  .grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1px;
-    background: var(--border);
-    border-top: 0.5px solid var(--border);
+  /* ---------- grid ---------- */
+  .grid{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:1px;
+    background:var(--line);
+    margin:1px 0 80px;
+  }
+  @media(max-width:780px){
+    .grid{grid-template-columns:1fr;}
+    .stats{grid-template-columns:repeat(2,1fr);}
+    .stat:nth-child(2){border-right:none;}
   }
 
-  /* CARD */
-  .card {
-    background: var(--surface);
-    padding: 28px 28px 24px;
-    cursor: pointer;
-    transition: background .15s;
-    position: relative;
-    overflow: hidden;
+  .card{
+    background:var(--card);padding:34px 32px 30px;
+    position:relative;display:flex;flex-direction:column;
+    transition:background .2s ease;
   }
-  .card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--card-accent, transparent);
-    transition: opacity .2s;
-    opacity: 0;
-  }
-  .card:hover { background: var(--surface2); }
-  .card:hover::before { opacity: 1; }
-  .card.chosen { background: var(--surface2); }
-  .card.chosen::before { opacity: 1; }
-  .card.gone { display: none; }
+  .card:hover{background:var(--card-hover);}
+  .card.hidden{display:none;}
 
-  /* CARD ACCENT COLORS BY LEAGUE */
-  .card[data-l="lpl"] { --card-accent: var(--lpl); }
-  .card[data-l="lch"] { --card-accent: var(--lch); }
-  .card[data-l="ll1"] { --card-accent: var(--ll1); }
-  .card[data-l="lbl"] { --card-accent: var(--lbl); }
-  .card[data-l="lla"] { --card-accent: var(--lla); }
-  .card[data-l="lsa"] { --card-accent: var(--lsa); }
-
-  .card-top {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    margin-bottom: 12px;
-    gap: 8px;
-  }
-  .league-badge {
-    font-size: 9px;
-    font-weight: 600;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: 20px;
-  }
-  .lpl-b { background: rgba(124,92,252,.15); color: #a98ffc; border: 0.5px solid rgba(124,92,252,.3); }
-  .lch-b { background: rgba(232,160,32,.15); color: #e8a020; border: 0.5px solid rgba(232,160,32,.3); }
-  .ll1-b { background: rgba(58,143,232,.15); color: #7ab8f5; border: 0.5px solid rgba(58,143,232,.3); }
-  .lbl-b { background: rgba(232,64,64,.15); color: #f07878; border: 0.5px solid rgba(232,64,64,.3); }
-  .lla-b { background: rgba(52,178,110,.15); color: #5fd490; border: 0.5px solid rgba(52,178,110,.3); }
-  .lsa-b { background: rgba(32,191,176,.15); color: #40dfd0; border: 0.5px solid rgba(32,191,176,.3); }
-
-  .swatches { display: flex; gap: 5px; }
-  .sw { width: 16px; height: 16px; border-radius: 50%; border: 0.5px solid rgba(255,255,255,.15); flex-shrink: 0; }
-
-  .club-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
-    letter-spacing: .03em;
-    color: var(--text);
-    line-height: 1;
-    margin-bottom: 3px;
-  }
-  .concept {
-    font-size: 11px;
-    color: var(--accent);
-    font-style: italic;
-    margin-bottom: 14px;
-  }
-  .pitch {
-    font-size: 12.5px;
-    color: #aaa;
-    line-height: 1.65;
-    margin-bottom: 14px;
+  .stamp{
+    position:absolute;top:28px;right:32px;
+    width:64px;height:64px;border-radius:50%;
+    border:1.5px dashed var(--accent-line);
+    display:flex;align-items:center;justify-content:center;
+    transform:rotate(-9deg);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:9.5px;letter-spacing:0.05em;text-transform:uppercase;
+    color:var(--accent);text-align:center;line-height:1.25;
+    flex-shrink:0;
   }
 
-  .section-label {
-    font-size: 9px;
-    font-weight: 600;
-    letter-spacing: .15em;
-    text-transform: uppercase;
-    color: var(--faint);
-    margin-bottom: 5px;
-    margin-top: 12px;
+  .card .league{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.1em;
+    text-transform:uppercase;color:var(--text-dim);margin-bottom:10px;
+  }
+  .card h2{
+    font-family:'Fraunces',serif;font-weight:600;font-size:27px;
+    margin:0 0 4px;max-width:80%;
+  }
+  .card .concept{
+    color:var(--accent);font-style:italic;font-size:15.5px;margin:0 0 18px;
+    font-family:'Fraunces',serif;font-weight:400;
+  }
+  .card .hook{color:var(--text);font-size:14.8px;margin:0 0 14px;}
+  .card .factbox{
+    border-left:2px solid var(--accent-line);
+    padding:10px 14px;margin:0 0 18px;
+    background:var(--accent-dim);
+    font-size:13px;color:var(--text-muted);border-radius:0 4px 4px 0;
+  }
+  .card .factbox b{color:var(--accent);font-weight:600;}
+  .section-label{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.08em;
+    text-transform:uppercase;color:var(--text-dim);margin:0 0 5px;
+  }
+  .card .formation{font-size:13.8px;color:var(--text-muted);margin:0 0 16px;}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 18px;}
+  .tags span{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-dim);
+    border:1px solid var(--line);border-radius:100px;padding:4px 10px;
+  }
+  .card .arc{font-size:13.8px;color:var(--text-muted);margin:0 0 22px;flex-grow:1;}
+  .select-btn{
+    align-self:flex-start;
+    font-family:'IBM Plex Mono',monospace;font-size:12.5px;
+    background:transparent;color:var(--text);
+    border:1px solid var(--line-strong);border-radius:100px;
+    padding:10px 20px;cursor:pointer;transition:all .15s ease;
+  }
+  .select-btn:hover{background:var(--accent);color:#16110a;border-color:var(--accent);}
+
+  footer{
+    padding:40px 0 70px;border-top:1px solid var(--line);
+    color:var(--text-dim);font-size:13px;
   }
 
-  .tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 12px; }
-  .tag {
-    font-size: 10px;
-    padding: 3px 8px;
-    border-radius: 20px;
-    background: rgba(255,255,255,.05);
-    color: var(--muted);
-    border: 0.5px solid var(--border2);
+  .toast{
+    position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--accent);color:#16110a;
+    font-family:'IBM Plex Mono',monospace;font-size:13px;
+    padding:12px 22px;border-radius:100px;
+    opacity:0;transition:all .25s ease;pointer-events:none;
+    box-shadow:0 8px 30px rgba(0,0,0,0.4);
   }
-
-  .sel-btn {
-    margin-top: 14px;
-    width: 100%;
-    padding: 9px;
-    font-size: 12px;
-    font-weight: 500;
-    border-radius: 6px;
-    border: 0.5px solid var(--border2);
-    background: transparent;
-    color: var(--muted);
-    cursor: pointer;
-    transition: all .15s;
-    letter-spacing: .02em;
-  }
-  .sel-btn:hover { background: rgba(232,200,74,.08); color: var(--accent); border-color: rgba(232,200,74,.3); }
-  .card.chosen .sel-btn { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 600; }
-
-  /* CONFIRM BAR */
-  .confirm-bar {
-    display: none;
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    background: var(--accent);
-    color: #000;
-    padding: 14px 40px;
-    font-size: 13px;
-    font-weight: 600;
-    z-index: 100;
-    display: none;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .confirm-bar.visible { display: flex; }
-  .confirm-close {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
-    color: #000;
-    line-height: 1;
-    padding: 0 4px;
-  }
-
-  @media (max-width: 700px) {
-    .header { padding: 28px 20px 24px; }
-    .title { font-size: 36px; }
-    .header-stat .big { font-size: 44px; }
-    .filter-bar { padding: 14px 20px; }
-    .grid { grid-template-columns: 1fr; }
-    .card { padding: 22px 20px 20px; }
-    .confirm-bar { padding: 12px 20px; flex-direction: column; gap: 6px; align-items: flex-start; }
-  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="header-left">
-    <p class="eyebrow">FC26 Career Mode · Sporting Director's Dossier</p>
-    <h1 class="title">Choose Your Club</h1>
-    <p class="subtitle">17 concepts across 6 leagues. Each built for 5 seasons of story, identity, and genuine progression. Pick one and the full dossier gets built.</p>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">FC26 · Career Mode · v2</p>
+    <h1>Sporting Director's<br>Dossier — Rebuilt</h1>
+    <p class="lede">17 clubs, 5 seasons each, one identity per club. Rebuilt from scratch so no two clubs share a nationality pool, and every storyline is tied to something actually true — an owner, a demographic, a border, a trophy. Pick one and the full transfer business begins.</p>
+    <div class="audit">
+      <span>Before: <b>France ×2</b> · <b>Africa ×3</b> · <b>South America ×4</b> · <b>East Asia ×3</b></span>
+      <span>Now: <b>0 repeats</b></span>
+    </div>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><div class="num">17</div><div class="label">Clubs scouted</div></div>
+    <div class="stat"><div class="num">17</div><div class="label">Distinct identities</div></div>
+    <div class="stat"><div class="num">6</div><div class="label">Leagues</div></div>
+    <div class="stat"><div class="num">5</div><div class="label">Season arc</div></div>
   </div>
-  <div class="header-stat">
-    <div class="big">17</div>
-    <div class="small">Clubs scouted</div>
-  </div>
+
+  <div class="filters" id="filters"></div>
+
+  <div class="grid" id="grid"></div>
+
+  <footer class="wrap" style="padding-left:0;padding-right:0;">
+    Tell your sporting director which one to build out — full squad audit, transfer targets in and out, and season 1 priorities follow once you pick.
+  </footer>
 </div>
 
-<div class="filter-bar">
-  <span class="filter-label">League</span>
-  <button class="fb on" onclick="fil('all',this)">All</button>
-  <button class="fb" onclick="fil('lpl',this)">Premier League</button>
-  <button class="fb" onclick="fil('lch',this)">Championship</button>
-  <button class="fb" onclick="fil('ll1',this)">Ligue 1</button>
-  <button class="fb" onclick="fil('lbl',this)">Bundesliga</button>
-  <button class="fb" onclick="fil('lla',this)">La Liga</button>
-  <button class="fb" onclick="fil('lsa',this)">Serie A</button>
-  <span class="count" id="clbl">17 clubs</span>
-</div>
-
-<div class="grid" id="g">
-
-  <!-- BOURNEMOUTH -->
-  <div class="card" data-l="lpl" id="cb" onclick="pick('b','Bournemouth — The Pacific Cherries')">
-    <div class="card-top">
-      <span class="league-badge lpl-b">Premier League</span>
-      <div class="swatches"><div class="sw" style="background:#CC0000;"></div><div class="sw" style="background:#1A1A1A;"></div><div class="sw" style="background:#eee;"></div></div>
-    </div>
-    <h2 class="club-name">Bournemouth</h2>
-    <p class="concept">"The Pacific Cherries" — Oceania &amp; Pacific Island project</p>
-    <p class="pitch">Turn Vitality Stadium into the home of Pacific football. Every signing comes from Australia, New Zealand, Japan, South Korea, or the Pacific Islands. Nobody else in the game is touching this market — you are buying cheap and building something no one has ever seen in a Premier League career mode.</p>
-    <div class="section-label">Formation philosophy</div>
-    <p class="pitch">4-3-3 built on pace and athleticism. Pacific Island players bring physical power, Australians bring grit, and East Asian players bring technical precision. The combination produces a team that is relentlessly energetic and hard to play against at home.</p>
-    <div class="section-label">Storyline tags</div>
-    <div class="tags"><span class="tag">Pacific pipeline</span><span class="tag">Untouched market</span><span class="tag">Underdog identity</span><span class="tag">Unique in the game</span></div>
-    <div class="section-label">Why it works for 5 seasons</div>
-    <p class="pitch">Season 1 you survive on a shoestring. Season 2 the identity is established. By season 3 the Pacific pool starts delivering gems. Season 4-5 you are a genuine mid-table PL side with one of the most talked-about career modes online.</p>
-    <button class="sel-btn" onclick="pick('b','Bournemouth — The Pacific Cherries');event.stopPropagation()">Select this concept →</button>
-  </div>
-
-  <!-- LEEDS -->
-  <div class="card" data-l="lch" id="cl" onclick="pick('l','Leeds — Yorkshire Samurai')">
-    <div class="card-top">
-      <span class="league-badge lch-b">Championship</span>
-      <div class="swatches"><div class="sw" style="background:#fff;border-color:#444;"></div><div class="sw" style="background:#FFD700;"></div><div class="sw" style="background:#1C4F9C;"></div></div>
-    </div>
-    <h2 class="club-name">Leeds United</h2>
-    <p class="concept">"Yorkshire Samurai" — East Asian revolution at Elland Road</p>
-    <p class="pitch">Every player Japanese, South Korean, or from wider East Asia. Elland Road becomes a fortress. The white kits mirror Japan's national colours so closely that the identity feels designed for this from day one. The promotion push is the hook and it delivers every time.</p>
-    <div class="section-label">Formation philosophy</div>
-    <p class="pitch">4-2-3-1 high press. East Asian players are technically excellent and tactically disciplined — perfect for a demanding pressing system. Japanese and Korean players already thrive in the Bundesliga's intensity and their work rate suits the LUFC identity better than almost any other nationality.</p>
-    <div class="section-label">Storyline tags</div>
-    <div class="tags"><span class="tag">Japan &amp; Korea</span><span class="tag">Championship promotion arc</span><span class="tag">Kit symmetry</span><span class="tag">Elland Road atmosphere</span></div>
-    <div class="section-label">Why it works for 5 seasons</div>
-    <p class="pitch">Season 1 is the promotion push. Season 2 in the Prem is survival. Season 3 you establish yourself. Season 4-5 the East Asian pipeline starts delivering genuine top-half players. The Bundesliga alone has enough Japanese faces to stock your squad twice over.</p>
-    <button class="sel-btn" onclick="pick('l','Leeds — Yorkshire Samurai');event.stopPropagation()">Select this concept →</button>
-  </div>
-
-  <!-- EVERTON -->
-  <div class="card" data-l="lpl" id="ce" onclick="pick('e','Everton — The Home Nations Project')">
-    <div class="card-top">
-      <span class="league-badge lpl-b">Premier League</span>
-      <div class="swatches"><div class="sw" style="background:#003399;"></div><div class="sw" style="background:#fff;border-color:#444;"></div><div class="sw" style="background:#1C2D1E;"></div></div>
-    </div>
-    <h2 class="club-name">Everton</h2>
-    <p class="concept">"The Home Nations" — Purely British. No exceptions.</p>
-    <p class="pitch">Every player English, Scottish, Welsh, or Northern Irish. No imports. No loopholes. A new stadium, a new era, and a squad built entirely from British talent. In an era when every top club floods their squad with foreign stars, Everton become the one club that bets everything on home-grown quality — and proves the point.</p>
-    <div class="section-label">Formation philosophy</div>
-    <p class="pitch">4-3-3 or 4-4-2 classic. British football at its best is direct, physical, and relentless — but it is also technically gifted when the players are chosen right. You are not playing kick-and-rush. You are proving that the best players from these four nations, in the right system, can compete with anyone. The formation should feel unmistakably British without being primitive.</p>
-    <div class="section-label">Storyline tags</div>
-    <div class="tags"><span class="tag">England, Scotland, Wales, N. Ireland</span><span class="tag">New stadium identity</span><span class="tag">Zero imports</span><span class="tag">Home-grown only</span><span class="tag">Statement save</span></div>
-    <div class="section-label">Why it works for 5 seasons</div>
-    <p class="pitch">British football produces more Premier League-calibre players than most people realise — they just get overlooked at the big six. You scour the Football League and lower leagues for gems that no one else is taking seriously. Season 1-2 you establish the project. Season 3 you are competitive. Season 4 you are top half. Season 5 you are making the argument loud and clear from a brand new stadium on Merseyside that British football never needed to be rescued.</p>
-    <button class="sel-btn" onclick="pick('e','Everton — The Home Nations Project');event.stopPropagation()">Select this concept →</button>
-  </div>
-
-  <!-- CRYSTAL PALACE -->
-  <div class="card" data-l="lpl" id="cp" onclick="pick('p','Crystal Palace — Les Aigles')">
-    <div class="card-top">
-      <span class="league-badge lpl-b">Premier League</span>
-      <div class="swatches"><div class="sw" style="background:#C4122E;"></div><div class="sw" style="background:#1B5FA8;"></div><div class="sw" style="background:#fff;border-color:#444;"></div></div>
-    </div>
-    <h2 class="club-name">Crystal Palace</h2>
-    <p class="concept">"Les Aigles" — The French Eagles of South London</p>
-    <p class="pitch">Palace are the Eagles. In French that is Les Aigles. Build the entire squad from France — the nation producing more elite talent than anywhere else right now. Ligue 1 bargains, second-string players at PSG and Monaco, academy graduates from Lyon and Rennes. The pipeline never runs dry.</p>
-    <div class="section-label">Formation philosophy</div>
-    <p class="pitch">4-3-1-2 or 4-2-3-1 centered around a genuine French #10. France produces extraordinary creative midfielders and the system is built around one. Technical, possession-based, with pace wide and a striker who holds the line. Mirrors how the French national team plays when everything clicks.</p>
-    <div class="section-label">Storyline tags</div>
-    <div class="tags"><span class="tag">French flair</span><span class="tag">Deepest talent pool</span><span class="tag">Ligue 1 pipeline</span><span class="tag">5-season ceiling is enormous</span></div>
-    <div class="section-label">Why it works for 5 seasons</div>
-    <p class="pitch">France has so much talent you never run out of upgrade options. Season 1-2 you stabilise and build identity. Season 3 you push top half. Season 4 you are in Europe. Season 5 you are competing with Arsenal and City using a squad that is entirely, proudly French.</p>
-    <button class="sel-btn" onclick="pick('p','Crystal Palace — Les Aigles');event.stopPropagation()">Select this concept →</button>
-  </div>
-
-  <!-- WEST HAM -->
-  <div class="card" data-l="lch" id="cw" onclick="pick('w','West Ham — The Hammers')">
-    <div class="card-top">
-      <span class="league-badge lch-b">Championship</span>
-      <div class="swatches"><div class="sw" style="background:#7D2C3B;"></div><div class="sw" style="background:#87CEEB;"></div><div class="sw" style="background:#fff;border-color:#444;"></div></div>
-    </div>
-    <h2 class="club-name">West Ham United</h2>
-    <p class="concept">"The Hammers" — European giants. Literal hammers.</p>
-    <p class="pitch">West Ham get relegated and you rebuild using one rule: every outfield player must be physically imposing. European players, minimum 6ft 1in, built like they were cut from iron. Scandinavian towers, Balkan warriors, Dutch and German powerhouses. The London Stadium becomes a ground that opponents genuinely dread visiting. Not a big team — a massive one.</p>
-    <div class="section-label">Formation philosophy</div>
-    <p class="pitch">3-5-2 or 5-3-2 built entirely around dominating aerial duels, second balls, and set pieces. Every corner and free kick is a genuine goal threat. You defend with your size, transition with your legs, and score through power and physicality. In the Championship you are too big for every opponent. In the Prem you become a set-piece machine that wins points others cannot. Technically gifted European players who also happen to be built like centre-backs at every position.</p>
-    <div class="section-label">Storyline tags</div>
-    <div class="tags"><span class="tag">Height &amp; physicality</span><span class="tag">European only</span><span class="tag">Set-piece monsters</span><span class="tag">Fallen giant rebuild</span><span class="tag">London Stadium fortress</span></div>
-    <div class="section-label">Why it works for 5 seasons</div>
-    <p class="pitch">Season 1 Championship promotion — you physically bully every team in the division. Season 2 PL survival through set pieces and organised defending. Season 3 your European giants start showing their technical quality too. Season 4 Europa League. Season 5 you have built the most physically imposing squad in the Premier League and teams gameplan specifically against your size. Scandinavia, the Netherlands, Germany, and the Balkans have enough 6ft+ players with faces to run this for a decade.</p>
-    <button class="sel-btn" onclick="pick('w','West Ham — The Hammers');event.stopPropagation()">Select this concept →</button>
-  </div>
-
-  <!-- SUNDERLAND -->
-  <div class="card" data-l="lch" id="cs" onclick="pick('s','Sunderland — The Black Cats of Africa')">
-    <div class="card-top">
-      <span class="league-badge lch-b">Championship</span>
-      <div class="swatches"><div class="sw" style="background:#CC0000;"></div><div class="sw" style="background:#fff;border-color:#444;"></div><div class="sw" style="background:#1A1A1A;"></div></div>
-    </div>
-    <h2 class="club-name">Sunderland</h2>
-    <p class="concept">"The Black Cats of Africa" — Stadium of Light, continent of talent</p>
-    <p class="pitch">Build Sunderland back into a top-flight force using African talent exclusively. Every signing from the continent. The Stadium of Light becomes a beacon that draws the best of Africa to the northeast of England — a club that has found its identity after years of searching for one.</p>
-    <div class="section-label">Formation philosophy</div>
-    <p class="pitch">4-3-3 high energy with width. African players bring pace, power, and technical quality that suits a direct, expansive system. Sunderland's fanbase feeds off passion and effort — a team that runs hard, presses high, and attacks with intensity will have the Stadium of Light rocking from season one.</p>
-    <div class="section-label">Storyline tags</div>
-    <div class="tags"><span class="tag">African talent hub</span><span class="tag">Stadium of Light</span><span class="tag">Underdog with history</span><span class="tag">Championship to PL arc</span></div>
-    <div class="section-label">Why it works for 5 seasons</div>
-    <p class="pitch">Season 1 is promotion. Season 2 is PL survival. Season 3 you start building properly. Season 4-5 you are mid-table PL with a genuine African identity and players who have become household names through your system. The most emotionally satisfying Championship start on this list.</p>
-    <button class="sel-btn" onclick="pick('s','Sunderland — The Black Cats of Africa');event.stopPropagation()">Select this concept →</button>
-  </div>
-
-  <!-- FULHAM -->
-  <div class="card" data-l="lpl" id="cfu" onclick="pick('fu','Fulham — La Belle Équipe')">
-    <div class="card-top">
-      <span class="league-badge lpl-b">Premier League</span>
-      <div class="swatches"><div class="sw" style="background:#fff;border-color:#444;"></div><div class="sw" style="background:#1A1A1A;"></div><div class="sw" style="background:#CC0000;"></div></div>
-    </div>
-    <h2 class="club-name">Fulham</h2>
-    <p class="concept">"La Belle Équipe" — The French Connection at Craven Cottage</p>
-    <p class="pitch">Craven Cottage on the Thames is one of the most charming grounds in English football. Make it entirely French. Every player sourced from France or a French academy. Fulham's classy, understated identity suits French football's technical sophistication perfectly.</p>
-    <div class="section-label">Formation philosophy</div>
-    <p class="pitch">4-3-1-2 built around a French #10 who dictates tempo. Short passing, intelligent movement, clinical finishing. French players are tactically disciplined enough to execute a possession system without it becoming predictable.</p>
-    <div class="section-label">Storyline tags</div>
-    <div class="tags"><span class="tag">French sophistication</span><span class="tag">Craven Cottage character</span><span class="tag">London cultural project</span><span class="tag">Ligue 1 scouting</span></div>
-    <div class="section-label">Why it works for 5 seasons</div>
-    <p class="pitch">Season 1 you begin the transition. Season 2-3 you are fully French and pushing top half. Season 4 Europa League. Season 5 you have built something genuinely beautiful — a French team playing precise football in front of the Thames. France's depth guarantees you never run out of upgrades.</p>
-    <button class="sel-btn" onclick="pick('fu','Fulham — La Belle Équipe');event.stopPropagation()">Select this concept →</button>
-  </div>
-
-  <!-- MARSEILLE -->
-  <div class="card" data-l="ll1" id="cm" onclick="pick('m','Marseille — L\'OM Africain')">
-    <div class="card-top">
-      <span class="league-badge ll1-b">Ligue 1</span>
-      <div class="swatches"><div class="sw" style="background:#fff;border-color:#444;"></div><div class="sw" style="background:#009CDE;"></div><div class="sw" style="background:#1A1A1A;"></div></div>
-    </div>
-    <h2 class="club-name">Marseille</h2>
-    <p class="concept">"L'OM Africain" — Making the connection official</p>
-    <p class="pitch">Marseille's fanbase has always been deeply connected to North and West African culture. This concept does not invent a theme — it fulfils one the club already lives in reality. Build OM exclusively with African talent and play out of the Vélodrome, the loudest stadium in France.</p>
-    <div class="section-label">Formation philosophy</div>
-    <p class="pitch">4-2-3-1 aggressive and direct. African players in an explosive, high-energy system at the Vélodrome is what the fanbase dreams about. Press high, attack with pace, with a double pivot protecting a back four built for duels.</p>
-    <div class="section-label">Storyline tags</div>
-    <div class="tags"><span class="tag">Most authentic concept on the list</span><span class="tag">Vélodrome atmosphere</span><span class="tag">North &amp; West Africa</span><span class="tag">Champions League ambition</span></div>
-    <div class="section-label">Why it works for 5 seasons</div>
-    <p class="pitch">Season 1-2 you win Ligue 1 or come very close. Season 3 you go deep in the Champions League. Season 4-5 you are regularly in the knockouts with a squad that the whole of Africa is proud of. The most powerful narrative of any non-English option on this list.</p>
-    <button class="sel-btn" onclick="pick('m','Marseille — L\'OM Africain');event.stopPropagation()">Select this concept →</button>
-  </div>
-
-  <!-- OGC NICE -->
-  <div class="card" data-l="ll1" id="cn" onclick="pick('n','OGC Nice — La Côte Brésilienne')">
-    <div class="card-top">
-      <span class="league-badge ll1-b">Ligue 1</span>
-      <div class="swatches"><div class="sw" style="background:#CC0000;"></div><div class="sw" style="background:#1A1A1A;"></div><div class="sw" style="background:#fff;border-color:#444;"></div></div>
-    </div>
-    <h2 class="club-name">OGC Nice</h2>
-    <p class="concept">"La Côte Brésilienne" — Brazilian football on the French Riviera</p>
-    <p class="pitch">The French Riviera. Sun, style, the Mediterranean, and an entire squad of Brazilians. INEOS money meets South American flair in the most aesthetically pleasing career mode setting you could construct. The Allianz Riviera becomes the most exciting ground in France.</p>
-    <div class="section-label">Formation philosophy</div>
-    <p class="pitch">4-3-3 pure. A fluid false nine or classic centre forward, two wide forwards who cut inside, and a midfield three with one anchor and two given freedom to create. The game should feel like watching Brazilians play on a beach — but actually winning things.</p>
-    <div class="section-label">Storyline tags</div>
-    <div class="tags"><span class="tag">Brazilian flair</span><span class="tag">Riviera backdrop</span><span class="tag">INEOS financial backing</span><span class="tag">Ligue 1 title ambition</span></div>
-    <div class="section-label">Why it works for 5 seasons</div>
-    <p class="pitch">Season 1 you compete for the title immediately. Season 2-3 you win it. Season 4 Champions League knockouts. Season 5 you are one of the most recognisable clubs in Europe. Brazil has more player faces than any other nation in the game.</p>
-    <button class="sel-btn" onclick="pick('n','OGC Nice — La Côte Brésilienne');event.stopPropagation()">Select this concept →</button>
-  </div>
-
-  <!-- FRANKFURT -->
-  <div class="card" data-l="lbl" id="cff" onclick="pick('ff','Frankfurt — Die Adler Südamerikas')">
-    <div class="card-top">
-      <span class="league-badge lbl-b">Bundesliga</span>
-      <div class="swatches"><div class="sw" style="background:#CC0000;"></div><div class="sw" style="background:#1A1A1A;"></div><div class="sw" style="background:#fff;border-color:#444;"></div></div>
-    </div>
-    <h2 class="club-name">Eintracht Frankfurt</h2>
-    <p class="concept">"Die Adler Südamerikas" — The South American Eagles of Germany</p>
-    <p class="pitch">Frankfurt are the Eagles of Germany. Fill them with the Eagles of South America — Colombians, Brazilians, Argentines, Venezolanos. Frankfurt's Europa League DNA and fanbase that travels the continent deserve a South American squad to fall in love with.</p>
-    <div class="section-label">Formation philosophy</div>
-    <p class="pitch">4-2-3-1 with a high press. South American players — particularly Colombians and Argentines — combine the grit to press with the technique to unlock defences. The double pivot protects a back four while the front four express themselves completely.</p>
-    <div class="section-label">Storyline tags</div>
-    <div class="tags"><span class="tag">South American pipeline</span><span class="tag">Europa League pedigree</span><span class="tag">Bundesliga dark horse</span><span class="tag">Deutsche Bank Park identity</span></div>
-    <div class="section-label">Why it works for 5 seasons</div>
-    <p class="pitch">Season 1-2 you are in Europe and building the South American identity. Season 3 you challenge the top four. Season 4 Champions League. Season 5 you are competing with Bayern with a squad that is entirely and proudly South American. Brazil, Argentina, and Colombia alone supply enough faces for ten seasons.</p>
-    <button class="sel-btn" onclick="pick('ff','Frankfurt — Die Adler Südamerikas');event.stopPropagation()">Select this concept →</button>
-  </div>
-
-  <!-- STUTTGART -->
-  <div class="card" data-l="lbl" id="cst" onclick="pick('st','Stuttgart — Die Roten Samurai')">
-    <div class="card-top">
-      <span class="league-badge lbl-b">Bundesliga</span>
-      <div class="swatches"><div class="sw" style="background:#fff;border-color:#444;"></div><div class="sw" style="background:#CC0000;"></div><div class="sw" style="background:#1A1A1A;"></div></div>
-    </div>
-    <h2 class="club-name">VfB Stuttgart</h2>
-    <p class="concept">"Die Roten Samurai" — East Asian powerhouse in the Bundesliga</p>
-    <p class="pitch">Germany already has the strongest East Asian pipeline in European football. Stuttgart lean into it completely. Every player Japanese, South Korean, or from wider East Asia. The MHPArena becomes the most important club for Asian football on the planet.</p>
-    <div class="section-label">Formation philosophy</div>
-    <p class="pitch">4-3-3 demanding press. East Asian players are technically precise and tactically intelligent — they execute systems at an elite level. Japanese and South Korean players already thrive in the Bundesliga's intensity. Disciplined in shape, explosive in transitions.</p>
-    <div class="section-label">Storyline tags</div>
-    <div class="tags"><span class="tag">Japan &amp; Korea</span><span class="tag">Bundesliga pipeline ready</span><span class="tag">Most face-realistic concept</span><span class="tag">Asian market explosion</span></div>
-    <div class="section-label">Why it works for 5 seasons</div>
-    <p class="pitch">The most practical concept in terms of faces from day one. Season 1-2 you are Bundesliga top six. Season 3 you break into the top four. Season 4 Champions League. Season 5 you challenge Bayern with a squad that has made Stuttgart the most followed club in Asia.</p>
-    <button class="sel-btn" onclick="pick('st','Stuttgart — Die Roten Samurai');event.stopPropagation()">Select this concept →</button>
-  </div>
-
-  <!-- HAMBURG -->
-  <div class="card" data-l="lbl" id="ch" onclick="pick('h','Hamburg — Die Rothosen Vikings')">
-    <div class="card-top">
-      <span class="league-badge lbl-b">Bundesliga</span>
-      <div class="swatches"><div class="sw" style="background:#fff;border-color:#444;"></div><div class="sw" style="background:#CC0000;"></div><div class="sw" style="background:#1A1A1A;"></div></div>
-    </div>
-    <h2 class="club-name">Hamburger SV</h2>
-    <p class="concept">"Die Rothosen Vikings" — Scandinavian comeback kings</p>
-    <p class="pitch">HSV are back in the Bundesliga with a point to prove. Rebuild them from the ground up with exclusively Scandinavian talent — Norway, Sweden, Denmark, Finland, Iceland. Hamburg's port city identity and proximity to the Nordic world makes this geographically and culturally perfect.</p>
-    <div class="section-label">Formation philosophy</div>
-    <p class="pitch">4-4-2 or 3-5-2 built on physicality and organization. You defend as a unit, press with intensity, and attack with pace and power. As Scandinavian quality improves season by season, the system opens up and becomes genuinely exciting to watch.</p>
-    <div class="section-label">Storyline tags</div>
-    <div class="tags"><span class="tag">Scandinavian identity</span><span class="tag">Geographic logic</span><span class="tag">Fallen giant with history</span><span class="tag">Nordic depth pool</span></div>
-    <div class="section-label">Why it works for 5 seasons</div>
-    <p class="pitch">Season 1-2 you re-establish Hamburg as top six with a Viking identity. Season 3 you break into Europe. Season 4-5 you are a Bundesliga top-four fixture. Haaland proved the template. Now build an entire club around it.</p>
-    <button class="sel-btn" onclick="pick('h','Hamburg — Die Rothosen Vikings');event.stopPropagation()">Select this concept →</button>
-  </div>
-
-  <!-- ESPANYOL -->
-  <div class="card" data-l="lla" id="cen" onclick="pick('en','Espanyol — El Proyecto Sudamericano')">
-    <div class="card-top">
-      <span class="league-badge lla-b">La Liga</span>
-      <div class="swatches"><div class="sw" style="background:#003DA5;"></div><div class="sw" style="background:#fff;border-color:#444;"></div><div class="sw" style="background:#CC0000;"></div></div>
-    </div>
-    <h2 class="club-name">Espanyol</h2>
-    <p class="concept">"El Proyecto Sudamericano" — In Barça's shadow no more</p>
-    <p class="pitch">Espanyol have lived in Barcelona's shadow forever. You change that narrative. Build the club exclusively with South American talent. The blue and white stripes mirror Argentina's kit so closely that every home game feels like a statement against the club down the road.</p>
-    <div class="section-label">Formation philosophy</div>
-    <p class="pitch">4-3-3 with an Argentine spine and Brazilian width. A classic Argentine box-to-box in the middle, two wide forwards from Brazil or Colombia who are terrifying one-on-one. The system should feel like a South American national team match — technical, passionate, with an edge.</p>
-    <div class="section-label">Storyline tags</div>
-    <div class="tags"><span class="tag">South America</span><span class="tag">El Clásico rival arc</span><span class="tag">Kit identity match</span><span class="tag">Underdog with real ambition</span></div>
-    <div class="section-label">Why it works for 5 seasons</div>
-    <p class="pitch">Season 1-2 survival and identity. Season 3 top half and Europa. Season 4 you are beating Barça regularly. Season 5 you are La Liga top four with a South American squad that has made Espanyol one of the most followed clubs on the continent.</p>
-    <button class="sel-btn" onclick="pick('en','Espanyol — El Proyecto Sudamericano');event.stopPropagation()">Select this concept →</button>
-  </div>
-
-  <!-- BETIS -->
-  <div class="card" data-l="lla" id="cbt" onclick="pick('bt','Betis — Los Verdiblancos Africanos')">
-    <div class="card-top">
-      <span class="league-badge lla-b">La Liga</span>
-      <div class="swatches"><div class="sw" style="background:#00833D;"></div><div class="sw" style="background:#fff;border-color:#444;"></div><div class="sw" style="background:#1A1A1A;"></div></div>
-    </div>
-    <h2 class="club-name">Real Betis</h2>
-    <p class="concept">"Los Verdiblancos Africanos" — The green and white of Africa</p>
-    <p class="pitch">Betis play in green and white. Nigeria play in green and white. Senegal play in green and white. The kit connection is real and it is striking. Build the Seville club that the city actually loves with African talent exclusively and turn the Villamarín into the most colourful stadium in La Liga.</p>
-    <div class="section-label">Formation philosophy</div>
-    <p class="pitch">4-2-3-1 expressive and forward-thinking. Betis fans love football played the right way. African players in an expansive system that uses the width of the pitch and encourages individual brilliance suit the club's philosophy completely.</p>
-    <div class="section-label">Storyline tags</div>
-    <div class="tags"><span class="tag">Green and white kit connection</span><span class="tag">African talent</span><span class="tag">Passionate fanbase</span><span class="tag">Seville derby fuel</span></div>
-    <div class="section-label">Why it works for 5 seasons</div>
-    <p class="pitch">Season 1-2 you push for Europa. Season 3 you qualify and go deep. Season 4 consistent top four. Season 5 Champions League with a squad that has made Betis the most exciting story in Spanish football. Winning the Seville derby with a fully African squad is the highlight of the save.</p>
-    <button class="sel-btn" onclick="pick('bt','Betis — Los Verdiblancos Africanos');event.stopPropagation()">Select this concept →</button>
-  </div>
-
-  <!-- SEVILLA -->
-  <div class="card" data-l="lla" id="csv" onclick="pick('sv','Sevilla — Los Guerreros del Este')">
-    <div class="card-top">
-      <span class="league-badge lla-b">La Liga</span>
-      <div class="swatches"><div class="sw" style="background:#fff;border-color:#444;"></div><div class="sw" style="background:#CC0000;"></div><div class="sw" style="background:#1A1A1A;"></div></div>
-    </div>
-    <h2 class="club-name">Sevilla</h2>
-    <p class="concept">"Los Guerreros del Este" — Eastern European gem machine</p>
-    <p class="pitch">Sevilla built their entire identity on finding undervalued gems through Monchi's scouting network. You double down with a twist — exclusively Eastern European talent. Poland, Croatia, Czech Republic, Serbia, Ukraine. Buy cheap, win Europa Leagues, sell at massive profit, reinvest in the next wave.</p>
-    <div class="section-label">Formation philosophy</div>
-    <p class="pitch">4-1-4-1 defensively solid and lethal on the counter. Eastern European players combine technical quality with physical resilience that suits European knockout football perfectly. Croatian technique, Polish power, Serbian physicality — a spine that wins trophies.</p>
-    <div class="section-label">Storyline tags</div>
-    <div class="tags"><span class="tag">Eastern European grit</span><span class="tag">Monchi sell-and-reinvest</span><span class="tag">Europa League kings</span><span class="tag">La Liga top-four push</span></div>
-    <div class="section-label">Why it works for 5 seasons</div>
-    <p class="pitch">Season 1-2 you win the Europa League. Season 3 you use the prize money to push La Liga. Season 4 Champions League. Season 5 genuine La Liga top-four side that sells gems at extraordinary profit and replaces them seamlessly. The Eastern European pool has exploded in quality.</p>
-    <button class="sel-btn" onclick="pick('sv','Sevilla — Los Guerreros del Este');event.stopPropagation()">Select this concept →</button>
-  </div>
-
-  <!-- ROMA -->
-  <div class="card" data-l="lsa" id="cr" onclick="pick('r','Roma — I Lupi del Sudamerica')">
-    <div class="card-top">
-      <span class="league-badge lsa-b">Serie A</span>
-      <div class="swatches"><div class="sw" style="background:#9B1A1A;"></div><div class="sw" style="background:#D4A017;"></div><div class="sw" style="background:#1A1A1A;"></div></div>
-    </div>
-    <h2 class="club-name">AS Roma</h2>
-    <p class="concept">"I Lupi del Sudamerica" — Wolves of the Americas at the Olimpico</p>
-    <p class="pitch">Roma are the Wolves — I Lupi. South America is full of wolves. Build the entire squad from Brazil, Argentina, Uruguay, and Colombia. Those iconic deep red and gold kits with a South American squad playing at the Olimpico in Rome is a combination that should not work as well as it does. But it does.</p>
-    <div class="section-label">Formation philosophy</div>
-    <p class="pitch">3-4-2-1 or 4-2-3-1 flexible and tactically intelligent. South American players — particularly Brazilians and Argentines — thrive in Italian football's technically demanding environment. Airtight defensive structure, complete freedom for your South American creators above it.</p>
-    <div class="section-label">Storyline tags</div>
-    <div class="tags"><span class="tag">South American wolves</span><span class="tag">Iconic red and gold kits</span><span class="tag">Olimpico stage</span><span class="tag">Scudetto ambition</span></div>
-    <div class="section-label">Why it works for 5 seasons</div>
-    <p class="pitch">Season 1-2 you push Serie A top four and establish the identity. Season 3 Europa or Conference League win. Season 4 Champions League football. Season 5 you are fighting for the Scudetto with a squad that is entirely South American. The Olimpico under floodlights with a Brazilian #10 pulling the strings is as good as career mode gets.</p>
-    <button class="sel-btn" onclick="pick('r','Roma — I Lupi del Sudamerica');event.stopPropagation()">Select this concept →</button>
-  </div>
-
-  <!-- COMO -->
-  <div class="card" data-l="lsa" id="cco" onclick="pick('co','Como — I Lariani Asiatici')">
-    <div class="card-top">
-      <span class="league-badge lsa-b">Serie A</span>
-      <div class="swatches"><div class="sw" style="background:#6CACE4;"></div><div class="sw" style="background:#fff;border-color:#444;"></div><div class="sw" style="background:#1A1A1A;"></div></div>
-    </div>
-    <h2 class="club-name">Como 1907</h2>
-    <p class="concept">"I Lariani Asiatici" — Asian ownership meets Asian identity on Lake Como</p>
-    <p class="pitch">Como are owned by Indonesian brothers. You do not invent a theme here — you fulfil one that already exists in the club's real-world ownership. Build the entire squad with East and Southeast Asian players. The sky blue kits are stunning, Lake Como is beautiful, and the narrative is unlike anything else on this list.</p>
-    <div class="section-label">Formation philosophy</div>
-    <p class="pitch">4-2-3-1 disciplined and possession-oriented. Como's real-world style under Fabregas is intelligent, technical, and positional — a perfect template for East Asian players who are technically excellent and tactically sophisticated. Control games, pass with purpose, exploit spaces through movement.</p>
-    <div class="section-label">Storyline tags</div>
-    <div class="tags"><span class="tag">Indonesian ownership logic</span><span class="tag">Asian identity</span><span class="tag">Lake Como setting</span><span class="tag">Most unique narrative on the list</span></div>
-    <div class="section-label">Why it works for 5 seasons</div>
-    <p class="pitch">Season 1-2 Serie A survival with the Asian identity taking shape. Season 3 you push for European qualification. Season 4 Europa League. Season 5 you are genuine Serie A top half with the most unique career mode story in the game. No one else is running an Indonesian-owned Serie A club with a full Asian squad. This save gets talked about.</p>
-    <button class="sel-btn" onclick="pick('co','Como — I Lariani Asiatici');event.stopPropagation()">Select this concept →</button>
-  </div>
-
-</div>
-
-<div class="confirm-bar" id="cbar">
-  <span id="ctxt"></span>
-  <button class="confirm-close" onclick="document.getElementById('cbar').classList.remove('visible')">×</button>
-</div>
+<div class="toast" id="toast"></div>
 
 <script>
-function fil(l, btn) {
-  document.querySelectorAll('.fb').forEach(b => b.classList.remove('on'));
-  btn.classList.add('on');
-  var cards = document.querySelectorAll('.card'), v = 0;
-  cards.forEach(function(c) {
-    if (l === 'all' || c.dataset.l === l) { c.classList.remove('gone'); v++; }
-    else c.classList.add('gone');
+const clubs = [
+  {
+    league:"Premier League", club:"AFC Bournemouth", stamp:"BOU · ENG",
+    concept:"\u201cThe Black Knight Pipeline\u201d",
+    hook:"Bill Foley's Black Knight group doesn't just own Bournemouth — it owns Lorient in Ligue 1 and holds Auckland A-League interests. Instead of one nationality, the identity is the real mechanic: spot talent young through Lorient and the wider network, develop it on loan, promote the best to the Cherries before the big six notice, sell high, reinvest.",
+    fact:"Real mechanic, not a theme — Foley's group already owns Lorient. This is how the club actually operates.",
+    formation:"4-2-3-1. Lorient-developed technicians through midfield, proven Bournemouth legs at the base, every sale funding the next loan.",
+    tags:["Feeder network","Sell-high model","Lorient pipeline","Moneyball scouting"],
+    arc:"Season 1-2: mining the network's loan list for unders. Season 3: the pipeline produces real starters. Season 4-5: selling academy graduates to the league's giants for profit, replacing them from your own system before anyone else knows the names."
+  },
+  {
+    league:"Championship", club:"Leeds United", stamp:"LUFC · JPN/KOR",
+    concept:"\u201cYorkshire Samurai\u201d",
+    hook:"Every player Japanese, South Korean, or wider East Asian. Elland Road becomes a fortress, the white kit mirrors Japan's national colours almost by accident, and the Championship promotion push gives season one a real spine from day one.",
+    fact:"Kept as originally pitched — still the strongest fit on the list, and now the only club running this market.",
+    formation:"4-2-3-1 high press. East Asian players are technically excellent and tactically disciplined — built for a demanding system.",
+    tags:["Japan & Korea","Promotion arc","Kit symmetry","Elland Road"],
+    arc:"Season 1: the promotion push. Season 2: Prem survival. Season 3: establishing. Season 4-5: the pipeline delivers genuine top-half quality — the Bundesliga alone stocks this market twice over."
+  },
+  {
+    league:"Premier League", club:"Everton", stamp:"EFC · GB/IRL",
+    concept:"\u201cThe Home Nations\u201d",
+    hook:"Every player English, Scottish, Welsh, or Northern Irish. No imports, no loopholes. Built around an actual real-world milestone: the new stadium at Bramley-Moore Dock just opened — new era, new ground, a club betting everything on a market the rest of the league has stopped taking seriously.",
+    fact:"Tied to a real, current club milestone — the new stadium — instead of an invented theme.",
+    formation:"4-3-3, direct and physical but technically gifted when the system is right. Proving British football never needed importing to compete.",
+    tags:["Home-grown only","New stadium era","Statement save","Zero imports"],
+    arc:"Season 1-2: establishing the project from a new ground. Season 3: competitive. Season 4: top half. Season 5: the argument is made, loud and clear, on Merseyside."
+  },
+  {
+    league:"Premier League", club:"Crystal Palace", stamp:"CPFC · FRA",
+    concept:"\u201cLes Aigles\u201d",
+    hook:"Palace are the Eagles — Les Aigles in French. Build the squad from France: Ligue 1 bargains, fringe players at PSG and Monaco, academy graduates from Lyon and Rennes. The deepest talent pool in football means the pipeline never runs dry.",
+    fact:"Kept as originally pitched — the only club on the list running a French identity.",
+    formation:"4-2-3-1 or 4-3-1-2 around a genuine French #10. Technical, possession-based, pace wide.",
+    tags:["French depth","Ligue 1 pipeline","Selhurst Park","No ceiling on upgrades"],
+    arc:"Season 1-2: stabilise and build identity. Season 3: top half. Season 4: Europe. Season 5: competing with the big six with a squad that's entirely, proudly French."
+  },
+  {
+    league:"Championship", club:"West Ham United", stamp:"WHU · NL/BE/DE/AT",
+    concept:"\u201cThe Hammers, Literally\u201d",
+    hook:"Relegated, rebuilding on one rule: every outfield player is built like iron. Narrowed specifically to the Netherlands, Belgium, Germany, and Austria — Low Countries and DACH physicality — so it's a different pool to Hamburg's Nordic project below, not the same idea with extra passports.",
+    fact:"Narrowed deliberately so it doesn't collide with Hamburg's Scandinavian focus.",
+    formation:"3-5-2 or 5-3-2 built on aerial duels and set pieces. You defend with size, score through power.",
+    tags:["Low Countries & DACH","Set-piece machine","Fallen giant rebuild","London Stadium"],
+    arc:"Season 1: bully the Championship physically. Season 2: PL survival on set pieces. Season 3-5: the technical quality of these players starts showing too, and you're a Europa-chasing side teams specifically gameplan against."
+  },
+  {
+    league:"Championship", club:"Sunderland", stamp:"SAFC · WAFR",
+    concept:"\u201cThe Black Cats of Africa\u201d",
+    hook:"Build Sunderland back into a top-flight force using talent from Sub-Saharan and West Africa specifically. The Stadium of Light becomes a beacon — a club that's spent years searching for an identity finally finding one.",
+    fact:"Narrowed to a specific region so it's a genuinely different player pool from Marseille's North African focus, not the same trope twice.",
+    formation:"4-3-3, high energy, width. A team that runs hard and presses high suits the fanbase's energy from minute one.",
+    tags:["West & Sub-Saharan Africa","Stadium of Light","Underdog with history","Championship to PL"],
+    arc:"Season 1: promotion. Season 2: PL survival. Season 3: building properly. Season 4-5: mid-table PL with players who've become household names through this system."
+  },
+  {
+    league:"Premier League", club:"Fulham", stamp:"FFC · PAK/IND/BAN",
+    concept:"\u201cThe Khan Project\u201d",
+    hook:"Fulham's actual owner, Shahid Khan, is Pakistani-American. Build around South Asian talent — Pakistan, India, Bangladesh, British-Asian academy prospects. The thinnest top-level pool on this list, but the most genuinely untouched market in the game, and it's tied to a real owner rather than a borrowed theme.",
+    fact:"Grounded in Fulham's actual ownership — not recycled from the Bournemouth-Pacific idea this replaces.",
+    formation:"4-2-3-1, patient and possession-based early, built to absorb a thinner pool of starters with academy depth around them.",
+    tags:["South Asia","Untouched market","Owner identity","Craven Cottage"],
+    arc:"Season 1-2: a genuinely slow build given the pool's depth — this is the project that tests your patience the most. Season 3-5: every breakthrough player is a story nobody else in the game is telling."
+  },
+  {
+    league:"Ligue 1", club:"Olympique de Marseille", stamp:"OM · MAGHREB",
+    concept:"\u201cL'OM Africain\u201d",
+    hook:"Marseille's fanbase has a genuine, deeply documented connection to North Africa — Algeria, Morocco, Tunisia. This isn't an invented theme, it's the one the club already lives in reality. The Vélodrome is the loudest ground in France for a reason.",
+    fact:"Narrowed to North Africa/Maghreb specifically so it's a different talent pool and different real story to Sunderland's West African focus.",
+    formation:"4-2-3-1, aggressive and direct. High press, pace, a double pivot protecting a back four built for duels.",
+    tags:["North Africa / Maghreb","Vélodrome atmosphere","Most authentic tie on the list","CL ambition"],
+    arc:"Season 1-2: win Ligue 1 or come close. Season 3: deep Champions League run. Season 4-5: regular knockout football with a squad the whole Maghreb is proud of."
+  },
+  {
+    league:"Ligue 1", club:"OGC Nice", stamp:"OGCN · ITA",
+    concept:"\u201cNizza\u201d",
+    hook:"Nice was literally Italian territory until 1860 — the city's own name is the Italian \u201cNizza.\u201d Build the Riviera club back toward its actual history using the Serie A market, instead of an aesthetic Brazilian-flair theme with no real link to the city.",
+    fact:"A real historical fact about the city, not a vibe.",
+    formation:"4-3-3, fluid wide forwards, an anchor and two free-roaming midfielders.",
+    tags:["Reclaimed Italian identity","Riviera setting","INEOS backing","Title ambition"],
+    arc:"Season 1: competing immediately. Season 2-3: winning Ligue 1. Season 4: Champions League knockouts. Season 5: one of the most recognisable clubs in Europe, built on a piece of the city's own forgotten history."
+  },
+  {
+    league:"Bundesliga", club:"Eintracht Frankfurt", stamp:"SGE · BALKAN",
+    concept:"\u201cThe Balkan Spine\u201d",
+    hook:"Frankfurt's actual 2022 Europa League-winning squad was built around Filip Kostić and Luka Jović — both Serbian. Lean into that real history rather than an eagle-crest coincidence: Serbia, Croatia, Bosnia, Kosovo.",
+    fact:"Grounded in the club's own recent trophy-winning squad, not symbolism.",
+    formation:"4-2-3-1 with a high press. A double pivot protects the back four while the front four create freely.",
+    tags:["Balkans","Real Europa pedigree","Bundesliga dark horse","Deutsche Bank Park"],
+    arc:"Season 1-2: building the identity in Europe. Season 3: challenging the top four. Season 4: Champions League. Season 5: competing with Bayern on a squad that mirrors the club's own best modern era."
+  },
+  {
+    league:"Bundesliga", club:"VfB Stuttgart", stamp:"VfB · TUR",
+    concept:"\u201cAnatolian Stuttgart\u201d",
+    hook:"Mercedes, Porsche, and Bosch recruited Turkish Gastarbeiter into Baden-Württemberg through the 60s and 70s, and Stuttgart has one of Germany's largest Turkish communities as a direct result. Build around Turkish and Turkish-German talent — documented immigration history, not a borrowed East Asian theme.",
+    fact:"Real postwar demographic history specific to this exact region of Germany.",
+    formation:"4-3-3, demanding press, disciplined in shape and explosive in transition.",
+    tags:["Turkey & Turkish-German","Industrial history","MHPArena","Bundesliga pipeline"],
+    arc:"Season 1-2: Bundesliga top six. Season 3: top four. Season 4: Champions League. Season 5: challenging Bayern with a squad that's made Stuttgart the most-followed German club in Turkey."
+  },
+  {
+    league:"Bundesliga", club:"Hamburger SV", stamp:"HSV · NORDIC",
+    concept:"\u201cThe Hanseatic Vikings\u201d",
+    hook:"Hamburg was a core Hanseatic League trading city with the Nordic world for centuries, and the ferry routes to Scandinavia still run today. Rebuild HSV with Norwegian, Swedish, Danish, Finnish, and Icelandic talent — geography and trade history, not invention.",
+    fact:"A genuine centuries-old trade link, with Haaland as the modern proof of concept.",
+    formation:"4-4-2 or 3-5-2, organised and physical, opening up as the squad's technical level rises.",
+    tags:["Scandinavia","Hanseatic history","Port city logic","Nordic depth"],
+    arc:"Season 1-2: re-establishing as a top-six side with a Nordic identity. Season 3: breaking into Europe. Season 4-5: a Bundesliga top-four fixture."
+  },
+  {
+    league:"La Liga", club:"Espanyol", stamp:"RCDE · CAT",
+    concept:"\u201cTots Catalans\u201d",
+    hook:"Espanyol were historically founded in contrast to Barça's Catalan-nationalist identity — which makes going all-in on Catalonia now a genuinely sharp twist, not a kit-colour coincidence. Reclaim the identity for real.",
+    fact:"Built on a real historical tension within Catalan football, not a borrowed South American theme.",
+    formation:"4-3-3, technical and possession-based, built to actually beat Barça at their own game.",
+    tags:["Catalonia only","Identity reversal","El Clásico rival arc","Underdog with bite"],
+    arc:"Season 1-2: survival and identity. Season 3: top half and Europa. Season 4: beating Barça regularly. Season 5: La Liga top four on an all-Catalan squad."
+  },
+  {
+    league:"La Liga", club:"Real Betis", stamp:"RBB · POR",
+    concept:"\u201cThe Algarve Corridor\u201d",
+    hook:"Andalusia shares a direct land border with Portugal's Algarve and Alentejo regions. Portugal massively overproduces talent relative to its population, and nobody else on this list is touching that pipeline. Practical, close, and the in-game depth is excellent.",
+    fact:"Real geography — not a kit-colour link to a country with no actual connection to the club.",
+    formation:"4-2-3-1, expressive, built around the technical quality Portuguese academies consistently produce.",
+    tags:["Portugal","Cross-border pipeline","Villamarín","Untapped depth"],
+    arc:"Season 1-2: pushing for Europa. Season 3: qualifying and going deep. Season 4: consistent top four. Season 5: Champions League on the back of the league's most underused border."
+  },
+  {
+    league:"La Liga", club:"Sevilla", stamp:"SFC · PL/CZ/SK/UA",
+    concept:"\u201cMonchi's Eastern Bloc\u201d",
+    hook:"Monchi's real Sevilla legacy leaned hard on Eastern Europe — Rakitić, Krychowiak, Gudelj were all genuine Monchi-era signings. Tightened here to Poland, Czech Republic, Slovakia, Ukraine, and the Baltics, so it doesn't overlap with Frankfurt's Balkan focus.",
+    fact:"Built on the actual scouting history of the club's most famous sporting director.",
+    formation:"4-1-4-1, defensively solid, lethal on the counter — the template that's already won Sevilla multiple Europa Leagues.",
+    tags:["Poland, Czech, Slovakia, Ukraine, Baltics","Monchi model","Sell-and-reinvest","Europa pedigree"],
+    arc:"Season 1-2: winning the Europa League. Season 3: reinvesting the prize money into La Liga. Season 4: Champions League. Season 5: a genuine top-four side that sells gems at extraordinary profit."
+  },
+  {
+    league:"Serie A", club:"AS Roma", stamp:"ASR · ITA/ROMA",
+    concept:"\u201cRoma de Roma\u201d",
+    hook:"Roma's own ultras culture is famously, fiercely resistant to squads stuffed with anonymous imports — they want players from the city. Go all-Italian with a bias toward Rome-born academy graduates. Mirrors Everton and Espanyol structurally as a third \u201cstay true to who we are\u201d save, without repeating either's nationality.",
+    fact:"Grounded in the actual sentiment of Roma's fanbase, not an animal-crest coincidence with South America.",
+    formation:"3-4-2-1, tactically flexible. Airtight structure, full freedom for the Italian creators above it.",
+    tags:["Italy & Roman academy","Curva Sud sentiment","Olimpico","Scudetto ambition"],
+    arc:"Season 1-2: Serie A top four, identity established. Season 3: Europa or Conference League silverware. Season 4: Champions League. Season 5: fighting for the Scudetto on an entirely Italian squad."
+  },
+  {
+    league:"Serie A", club:"Como 1907", stamp:"COMO · SEA",
+    concept:"\u201cI Lariani Asiatici\u201d",
+    hook:"Como are owned by the Indonesian Thohir brothers — a real fact, not an invented theme. Narrowed specifically to Southeast Asia (Indonesia, Thailand, Vietnam, the Philippines), tracking the genuine current trend of Dutch-Indonesian heritage players naturalizing for Indonesia's national team.",
+    fact:"Tightened to Southeast Asia so it's distinct from Leeds' Northeast Asia (Japan/Korea) focus — same continent, different story.",
+    formation:"4-2-3-1, disciplined and possession-oriented, matching Como's actual real-world style under Fabregas.",
+    tags:["Southeast Asia","Indonesian ownership","Lake Como setting","Most unique narrative"],
+    arc:"Season 1-2: Serie A survival, identity taking shape. Season 3: pushing for Europe. Season 4: Europa League. Season 5: genuine Serie A top half on the most distinctive story in the game."
+  }
+];
+
+const leagues = ["All","Premier League","Championship","Ligue 1","Bundesliga","La Liga","Serie A"];
+const filtersEl = document.getElementById('filters');
+const gridEl = document.getElementById('grid');
+
+function render(filter){
+  gridEl.innerHTML = clubs.map(c => `
+    <div class="card" data-league="${c.league}">
+      <div class="stamp">${c.stamp}</div>
+      <div class="league">${c.league}</div>
+      <h2>${c.club}</h2>
+      <p class="concept">${c.concept}</p>
+      <p class="hook">${c.hook}</p>
+      <div class="factbox"><b>Why it's distinct —</b> ${c.fact}</div>
+      <div class="section-label">Formation philosophy</div>
+      <p class="formation">${c.formation}</p>
+      <div class="tags">${c.tags.map(t=>`<span>${t}</span>`).join('')}</div>
+      <div class="section-label">Why it works for 5 seasons</div>
+      <p class="arc">${c.arc}</p>
+      <button class="select-btn" onclick="selectClub('${c.club.replace(/'/g,"\\'")}')">Select this concept →</button>
+    </div>
+  `).join('');
+  applyFilter(filter);
+}
+
+function applyFilter(filter){
+  document.querySelectorAll('.card').forEach(card=>{
+    card.classList.toggle('hidden', filter !== 'All' && card.dataset.league !== filter);
   });
-  document.getElementById('clbl').textContent = v + ' club' + (v !== 1 ? 's' : '');
 }
-function pick(id, label) {
-  document.querySelectorAll('.card').forEach(c => c.classList.remove('chosen'));
-  document.getElementById('c' + id).classList.add('chosen');
-  var bar = document.getElementById('cbar');
-  document.getElementById('ctxt').textContent = 'Selected: ' + label + ' — confirm below and the full Season 1 dossier gets built.';
-  bar.classList.add('visible');
+
+filtersEl.innerHTML = leagues.map((l,i)=>`<button class="pill ${i===0?'active':''}" data-league="${l}">${l}</button>`).join('');
+filtersEl.querySelectorAll('.pill').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    filtersEl.querySelectorAll('.pill').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    applyFilter(btn.dataset.league);
+  });
+});
+
+function selectClub(name){
+  const toast = document.getElementById('toast');
+  toast.textContent = `${name} selected — tell your sporting director in chat to start the build.`;
+  toast.classList.add('show');
+  setTimeout(()=>toast.classList.remove('show'), 3200);
 }
+
+render('All');
 </script>
+
 </body>
 </html>
